@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap');
+*{
+    font-family: 'Nunito', sans-serif;
+    color: #2C4669;
+}
+body{  
+    background-color: #f8f9fa;
+}
+.main-content{
+    padding: 80px 50px;
+}
+
+/* Navbar */
+.navbar-nav{
+    padding-top: 10px;
+}
+.navbar-brand{
+    padding-top: 15px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 24px;
+    color: #3C50E0 !important;
+}
+.navbar-nav .nav-link{
+    padding: 10px 12px !important;
+    font-size: 15px;
+    color: #2C4669;
+    font-weight: 600;
+}
+.nav-item .active{
+    color: #3C50E0 !important;
+}
+.text-primary{
+    color: #3C50E0 !important;
+}
+.text-warning{
+    color: #F8B709 !important;
+}
+.text-secondary{
+    color: #AFB3BF;
+}
+.bg-primary{
+    background-color: #3C50E0 !important;
+}
+.bg-warning{
+    background-color: #FFC535 !important;
+}
+.bg-success{
+    background-color: #1CDC75 !important;
+}
+.bg-info{
+    background-color: #232DC6 !important;
+}
+.bg-danger{
+    background-color: #F81728 !important;
+}
+.btn-primary{
+    background-color: #3C50E0;
+    border: #3C50E0;
+}
+.btn-primary:hover{
+    background-color: #2e43dd;
+    border: #2e43dd;
+}
+
+.btn-info{
+    background-color: #0C75FF;
+    border: #0C75FF;
+}
+.btn-info:hover{
+    background-color: #006dfc;
+    border: #006dfc;
+}
+.btn-danger{
+    background-color: #F81728;
+    border: #F81728;
+}
+.btn-danger:hover{
+    background-color: #e40114;
+    border: #e40114;
+}
+.modal-content{
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+}
+.modal-header{
+    border-radius: 5px 5px 3px 3px;
+    border-bottom: none;
+}
+.modal-header h5{
+    color: white !important;
+}
+/* Login */
+.login-page{
+    background-color: #95a6e41c;
+    padding: 90px 0px 30px 0px;
+}
+.login-header h4{
+    font-family: 'Fredoka One', cursive;
+    font-size: 28px;
+    font-weight: 400;
+    color: #3C50E0 !important;
+}
+.login-page .card{
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px #2C4669;
+}
+.login-page .input-group-text{
+    background-color: transparent;
+}
+.login-page i{
+    color: #3C50E0;
+}
+.login-page input{
+    font-size: 14px;
+}
+.login-page .btn{
+    border-radius: 5px;
+}
+.header h5{
+    color: #2C4669 !important;
+    font-weight: 700;
+}
+.header span{
+    color: #AFB3BF;
+}
+/* List Data */
+.data-list i{
+    color: white;
+    font-size: 14px;
+}
+/* Transaction Pages */
+.transaction-pages .btn-add a{
+    text-decoration: none;
+}
+.transaction-pages .card{
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 8px;
+    padding: 30px;
+}
