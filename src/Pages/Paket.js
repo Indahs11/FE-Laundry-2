@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal } from "bootstrap"
 import axios from "axios"  
-import { baseUrl, formatNumber } from '../Config'
+import { authorization, baseUrl, formatNumber } from '../Config'
 class User extends React.Component{
     constructor(){
         super()
@@ -10,6 +10,8 @@ class User extends React.Component{
             id_paket: "",
             jenis_paket: "",
             harga: "",
+            role: "",
+            visible: true,
             action: ""
         }
         if(!localStorage.getItem("token")){
@@ -18,7 +20,7 @@ class User extends React.Component{
     }
     getData() {
         let endpoint = "http://localhost:8000/paket"
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             this.setState({packs: response.data})
         })
@@ -39,7 +41,7 @@ class User extends React.Component{
         this.modalPaket.show()
 
         //mencari posisi index dari data member berdasarkan id_paket pada array members
-        let index = this.state.packs.findIndex(paket => paket.id_paket === id_paket)
+        let index = this.state.packs.findIndex((paket) => paket.id_paket === id_paket)
 
         this.setState({
             id_paket : this.state.packs[index].id_paket,
@@ -63,7 +65,7 @@ class User extends React.Component{
                 jenis_paket : this.state.jenis_paket,
                 harga : this.state.harga
             }
-            axios.post(endpoint, newPaket)
+            axios.post(endpoint, newPaket, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -78,7 +80,7 @@ class User extends React.Component{
                 jenis_paket : this.state.jenis_paket,
                 harga : this.state.harga
             }
-            axios.put(endpoint, data)
+            axios.put(endpoint, data, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -90,7 +92,7 @@ class User extends React.Component{
         if(window.confirm("Apakah anda yakin menghapus data ini?")){
             let endpoint = "http://localhost:8000/paket/" + id_paket
 
-            axios.delete(endpoint)
+            axios.delete(endpoint, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -100,6 +102,14 @@ class User extends React.Component{
     }
     componentDidMount(){
         this.getData()
+        let user = JSON.parse(localStorage.getItem("user"))
+        this.setState({role: user.role})
+
+        if(user.role === "Admin"){
+            this.setState({visible: true})
+        }else{
+            this.setState({visible: false})
+        }
     }
     render(){
         return(
@@ -111,7 +121,7 @@ class User extends React.Component{
                                 <h3 className="text-secondary pt-4">Data Paket</h3>
                             </div>
                             <div className="col-lg-2 col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-primary me-md-2 my-3" type="button" onClick={() => this.tambahData()}>Tambah Paket</button>
+                                <button class={`btn btn-primary me-md-2 my-3 ${this.state.visible ? `` : `d-none`}`} type="button" onClick={() => this.tambahData()}>Tambah Paket</button>
                             </div>
                         </div>
                         <ul className="list-group">
@@ -131,8 +141,8 @@ class User extends React.Component{
                                             <h6>Rp {formatNumber(pack.harga)}</h6>
                                         </div>
                                         <div className="col-lg-1">
-                                            <button className="btn btn-info btn-sm text-white mt-1 mx-2" onClick={() => this.ubahData(pack.id_paket)}><i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button className="btn btn-danger btn-sm mt-1" onClick={() => this.hapusData(pack.id_paket)}><i class="fa-solid fa-trash"></i></button>
+                                            <button className={`btn btn-info btn-sm text-white mt-1 mx-2 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.ubahData(pack.id_paket)}><i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button className={`btn btn-danger btn-sm mt-1 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(pack.id_paket)}><i class="fa-solid fa-trash"></i></button>
                                         </div>                                    
                                     </div>
                                 </li>

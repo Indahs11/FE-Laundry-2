@@ -1,5 +1,6 @@
-import React from "react";
-import axios from "axios";
+import React from "react"
+import axios from "axios"
+import { baseUrl } from "../Config"
 
 class Login extends React.Component {
   constructor() {
@@ -12,7 +13,7 @@ class Login extends React.Component {
 
   loginProcess(event){
     event.preventDefault()
-    let endpoint = "http://localhost:8000/auth"
+    let endpoint = `${baseUrl}/auth`
     let request = {
       username : this.state.username,
       password : this.state.password

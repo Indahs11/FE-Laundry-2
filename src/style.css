@@ -4,10 +4,10 @@
     color: #2C4669;
 }
 body{  
-    background-color: #f8f9fa;
+    background-color: #95a6e41c;
 }
 .main-content{
-    padding: 80px 50px;
+    padding: 100px 50px;
 }
 
 /* Navbar */
@@ -28,6 +28,7 @@ body{
 }
 .nav-item .active{
     color: #3C50E0 !important;
+    font-weight: 800;
 }
 .text-primary{
     color: #3C50E0 !important;

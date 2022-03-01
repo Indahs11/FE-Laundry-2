@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Modal } from "bootstrap";
+import { authorization } from "../Config";
 
 class FormTransaksi extends React.Component{
     constructor(){
@@ -26,7 +27,7 @@ class FormTransaksi extends React.Component{
     }
     getMember(){
         let endpoint = "http://localhost:8000/member"
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             this.setState({members: response.data})
         })
@@ -34,7 +35,7 @@ class FormTransaksi extends React.Component{
     }
     getPaket(){
         let endpoint = "http://localhost:8000/paket"
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             this.setState({packs: response.data})
         })
@@ -70,7 +71,7 @@ class FormTransaksi extends React.Component{
         if(window.confirm("Apakah anda yakin menghapus data ini?")){
             //mencari posisi index dari data yang dihapus
             let temp = this.state.detail_transaksi
-            let index = temp.findIndex(detail => detail.id_paket === id_paket)
+            let index = temp.findIndex((detail) => detail.id_paket === id_paket)
 
             temp.splice(index, 1)
 
@@ -90,7 +91,7 @@ class FormTransaksi extends React.Component{
                 dibayar : this.state.dibayar,
                 detail_transaksi: this.state.detail_transaksi
             }
-            axios.post(endpoint, newData)
+            axios.post(endpoint, newData, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 window.location.href = "/transaksi"
@@ -114,6 +115,7 @@ class FormTransaksi extends React.Component{
                             <div className="form-group">
                                 <label>ID Member</label>
                                 <select className="form-control mb-2" value={this.state.id_member} onChange={ev  => this.setState({id_member : ev.target.value})}>
+                                    <option value="">Pilih Member</option>
                                     {this.state.members.map(member => (
                                         <option value={member.id_member}>
                                             {member.nama}

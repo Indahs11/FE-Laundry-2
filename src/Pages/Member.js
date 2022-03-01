@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal } from "bootstrap"
 import { event } from 'jquery'
 import axios from 'axios'
-import {baseUrl} from "../Config.js"
+import {authorization, baseUrl} from "../Config.js"
 import { Link } from 'react-router-dom'
 
 
@@ -16,6 +16,8 @@ class Member extends React.Component{
             alamat: "",
             telepon: "",
             jenis_kelamin: "",
+            role: "",
+            visible: true,
             action: "" //untuk menyimpan aksi dari tambah atau ubah data
         }
 
@@ -25,7 +27,7 @@ class Member extends React.Component{
     }
     getData() {
         let endpoint = `${baseUrl}/member`
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             this.setState({members: response.data})
         })
@@ -70,7 +72,7 @@ class Member extends React.Component{
                 telepon : this.state.telepon,
                 jenis_kelamin : this.state.jenis_kelamin
             }
-            axios.post(endpoint, newMember)
+            axios.post(endpoint, newMember, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -88,7 +90,7 @@ class Member extends React.Component{
                 telepon : this.state.telepon,
                 jenis_kelamin : this.state.jenis_kelamin
             }
-            axios.put(endpoint, data)
+            axios.put(endpoint, data, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -100,7 +102,7 @@ class Member extends React.Component{
         if(window.confirm("Apakah anda yakin menghapus data ini?")){
             let endpoint = `${baseUrl}/member/${id_member}`
 
-            axios.delete(endpoint)
+            axios.delete(endpoint, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -108,8 +110,24 @@ class Member extends React.Component{
             .catch(error => console.log(error))
         }
     }
+    showAddButton(){
+        if(this.state.role === 'Admin' || this.state.role ==='Kasir'){
+            return(
+                <button class="btn btn-primary me-md-2 my-3" type="button" onClick={() => this.tambahData()}>Tambah Member</button>
+            )
+        }
+    }
     componentDidMount() {
         this.getData()
+        // cara pertama
+        let user = JSON.parse(localStorage.getItem("user"))
+        this.setState({role: user.role})
+        // cara kedua
+        if(user.role === 'Admin' || user.role === 'Kasir'){
+            this.setState({visible: true})
+        }else{
+            this.setState({visible: false})
+        }
     }
     render(){
         return(
@@ -120,7 +138,7 @@ class Member extends React.Component{
                             <h3 className="text-secondary pt-4">Data Member</h3>
                         </div>
                         <div className="col-lg-2 col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-primary me-md-2 my-3" type="button" onClick={() => this.tambahData()}>Tambah Member</button>
+                            {this.showAddButton()}
                         </div>
                     </div>
                     <div className="">
@@ -149,8 +167,8 @@ class Member extends React.Component{
                                             <h6>{member.alamat}</h6>
                                         </div> 
                                         <div className="col-lg-1">
-                                            <button className="btn btn-info btn-sm mt-1 mx-2" onClick={() => this.ubahData(member.id_member)}><i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button className="btn btn-danger btn-sm mt-1" onClick={() => this.hapusData(member.id_member)}><i class="fa-solid fa-trash"></i></button>
+                                            <button className={`btn btn-info btn-sm mt-1 mx-2 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.ubahData(member.id_member)}><i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button className={`btn btn-danger btn-sm mt-1 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(member.id_member)}><i class="fa-solid fa-trash"></i></button>
                                         </div>      
                                     </div>
                                 </li>
@@ -181,6 +199,7 @@ class Member extends React.Component{
                                     <div className="form-group">
                                         <label>Jenis Kelamin</label>
                                         <select className="form-control mb-2" value={this.state.jenis_kelamin} onChange={ev => this.setState({jenis_kelamin: ev.target.value})}>
+                                            <option value="">Pilih Jenis Kelamin</option>
                                             <option value="pria">Pria</option>
                                             <option value="wanita">Wanita</option>
                                         </select>

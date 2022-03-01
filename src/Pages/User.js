@@ -1,6 +1,7 @@
 import React from 'react'
 import { Modal } from "bootstrap" 
 import axios from 'axios' 
+import { authorization } from '../Config'
 
 class User extends React.Component{
     constructor(){
@@ -12,6 +13,7 @@ class User extends React.Component{
             username: "",
             password: "",
             role: "",
+            visible: true,
             action: ""
         }
         if(!localStorage.getItem("token")){
@@ -20,7 +22,7 @@ class User extends React.Component{
     }
     getData() {
         let endpoint = "http://localhost:8000/users"
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             this.setState({users: response.data})
         })
@@ -41,7 +43,7 @@ class User extends React.Component{
         this.modalUser.show()
 
         //mencari posisi index dari data member berdasarkan id_user pada array members
-        let index = this.state.users.findIndex(paket => paket.id_user === id_user)
+        let index = this.state.users.findIndex((user) => user.id_user === id_user)
 
         this.setState({
             id_user : this.state.users[index].id_user,
@@ -73,7 +75,7 @@ class User extends React.Component{
             // temp.push(newUser)
 
             // this.setState({users: temp})
-            axios.post(endpoint, newUser)
+            axios.post(endpoint, newUser, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -93,7 +95,7 @@ class User extends React.Component{
                 password : this.state.password,
                 role : this.state.role
             }
-            axios.put(endpoint, data)
+            axios.put(endpoint, data, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -105,7 +107,7 @@ class User extends React.Component{
         if(window.confirm("Apakah anda yakin menghapus data ini?")){
             let endpoint = "http://localhost:8000/users/" + id_user
 
-            axios.delete(endpoint)
+            axios.delete(endpoint, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -115,6 +117,14 @@ class User extends React.Component{
     }
     componentDidMount(){
         this.getData()
+        let user = JSON.parse(localStorage.getItem("user"))
+        this.setState({role: user.role})
+
+        if(user.role === "Admin"){
+            this.setState({visible: true})
+        }else{
+            this.setState({visible: false})
+        }
     }
     render(){
         return(
@@ -126,7 +136,7 @@ class User extends React.Component{
                                 <h3 className="text-secondary pt-4">Data User</h3>
                             </div>
                             <div className="col-lg-2 col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-primary me-md-2 my-3" type="button" onClick={() => this.tambahData()}>Tambah User</button>
+                                <button class={`btn btn-primary me-md-2 my-3 ${this.state.visible ? `` : `d-none`}`} type="button" onClick={() => this.tambahData()}>Tambah User</button>
                             </div>
                         </div>
                         <ul className="list-group data-list">
@@ -150,8 +160,8 @@ class User extends React.Component{
                                             <h6>{user.username}</h6>
                                         </div>
                                         <div className="col-lg-1">
-                                            <button className="btn btn-info btn-sm mt-1 mx-2" onClick={() => this.ubahData(user.id_user)}><i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button className="btn btn-danger btn-sm mt-1" onClick={() => this.hapusData(user.id_user)}><i class="fa-solid fa-trash"></i></button>
+                                            <button className={`btn btn-info btn-sm mt-1 mx-2 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.ubahData(user.id_user)}><i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button className={`btn btn-danger btn-sm mt-1 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(user.id_user)}><i class="fa-solid fa-trash"></i></button>
                                         </div>                                    
                                     </div>
                                 </li>
@@ -183,7 +193,7 @@ class User extends React.Component{
                                             <select className="form-control mb-2" value={this.state.role} onChange={ev => this.setState({role: ev.target.value})}>
                                                 <option value="Admin">Admin</option>
                                                 <option value="Kasir">Kasir</option>
-                                                <option value="Kasir">Owner</option>
+                                                <option value="Owner">Owner</option>
                                             </select>
                                         </div>
                                         <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">

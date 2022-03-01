@@ -1,14 +1,16 @@
 import React from "react";
 import axios from "axios";
 import moment from "moment";
-import {baseUrl, formatNumber} from "../Config.js"
+import {authorization, baseUrl, formatNumber} from "../Config.js"
 import { Link } from "react-router-dom"
 
 class Transaksi extends React.Component{
     constructor(){
         super()
         this.state = {
-            transaksi: []
+            transaksi: [],
+            role: "",
+            visible: true
         }
         if(!localStorage.getItem("token")){
             window.location.href = "/login"
@@ -16,7 +18,7 @@ class Transaksi extends React.Component{
     }
     getData(){
         let endpoint = `${baseUrl}/transaksi`
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             let dataTransaksi = response.data
             for(let i = 0; i < dataTransaksi.length; i++){
@@ -38,7 +40,7 @@ class Transaksi extends React.Component{
         if(window.confirm("Apakah anda yakin menghapus data ini?")){
             let endpoint = `${baseUrl}/transaksi/${id_transaksi}`
 
-            axios.delete(endpoint)
+            axios.delete(endpoint, authorization)
             .then(response => {
                 window.alert(response.data.message)
                 this.getData()
@@ -80,7 +82,7 @@ class Transaksi extends React.Component{
             let data = {
                 status : status
             }
-            axios.post(endpoint, data)
+            axios.post(endpoint, data, authorization)
             .then(response => {
                 window.alert(`Status transaksi telah diubah`)
                 this.getData()
@@ -110,7 +112,7 @@ class Transaksi extends React.Component{
             let data = {
                 dibayar : dibayar
             }
-            axios.get(endpoint, data)
+            axios.get(endpoint, data, authorization)
             .then(response => {
                 window.alert(`Status pembayaran transaksi telah diubah`)
                 this.getData()
@@ -120,6 +122,14 @@ class Transaksi extends React.Component{
     }
     componentDidMount(){
         this.getData()
+        let user = JSON.parse(localStorage.getItem("user"))
+        this.setState({role: user.role})
+
+        if(user.role === "Admin" || user.role === "Kasir"){
+            this.setState({visible: true})
+        }else{
+            this.setState({visible: false})
+        }
     }
     render(){
         return(
@@ -130,7 +140,7 @@ class Transaksi extends React.Component{
                             <h3 className="text-secondary pt-4">Data User</h3>
                         </div>
                         <div className="col-lg-2 col-md-6 d-grid gap-2 d-md-flex justify-content-md-end btn-add">
-                            <button class="btn btn-primary me-md-2 my-3" type="button"><Link to="/formTransaksi" className="text-white">Tambah Transaksi</Link></button>
+                            <button class={`btn btn-primary me-md-2 my-3 ${this.state.visible ? `` : `d-none`}`} type="button"><Link to="/formTransaksi" className="text-white">Tambah Transaksi</Link></button>
                         </div>
                     </div>
                     <ul className="list-group">

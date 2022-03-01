@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React from 'react'
-import { baseUrl, formatNumber } from '../Config'
+import { baseUrl, formatNumber, authorization } from '../Config'
 
 class Dashboard extends React.Component{
     constructor(){
@@ -19,7 +19,7 @@ class Dashboard extends React.Component{
     getSummary(){
         //Memanggil Member
         let endpoint = `${baseUrl}/member`
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             this.setState({jumlahMember : response.data.length})
         })
@@ -27,7 +27,7 @@ class Dashboard extends React.Component{
 
         //Memanggil Paket
         endpoint = `${baseUrl}/paket`
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             this.setState({jumlahPaket : response.data.length})
         })
@@ -35,7 +35,7 @@ class Dashboard extends React.Component{
         
         //Memanggil Transaksi
         endpoint = `${baseUrl}/transaksi`
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             let dataTransaksi = response.data
             let income = 0
@@ -55,7 +55,7 @@ class Dashboard extends React.Component{
 
         //Memanggil User
         endpoint = `${baseUrl}/users`
-        axios.get(endpoint)
+        axios.get(endpoint, authorization)
         .then(response => {
             this.setState({jumlahUser : response.data.length})
         })
