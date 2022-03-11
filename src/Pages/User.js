@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal } from "bootstrap" 
 import axios from 'axios' 
 import { authorization } from '../Config'
+import UserPic from './user.png'
 
 class User extends React.Component{
     constructor(){
@@ -130,43 +131,53 @@ class User extends React.Component{
         return(
             <div className="user-page">
                 <div className="main-content">
-                    <div className="">
-                        <div className="row mb-2">
-                            <div className="col-lg-10 col-md-6">
-                                <h3 className="text-secondary pt-4">Data User</h3>
+                    <div className="container">
+                        <div className="title-section row">
+                            <div className="col-lg-5">
+                                <h2>Selamat datang <br/>di <span>halaman <br/> user</span></h2>
+                                <h6 className="mt-3">Gulir ke bawah untuk melihat data user</h6>
+                                <div className="">
+                                    <button class={`btn btn-primary me-md-2 my-3 ${this.state.visible ? `` : `d-none`}`} type="button" onClick={() => this.tambahData()}>Tambah User</button>
+                                </div>
                             </div>
-                            <div className="col-lg-2 col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class={`btn btn-primary me-md-2 my-3 ${this.state.visible ? `` : `d-none`}`} type="button" onClick={() => this.tambahData()}>Tambah User</button>
+                            <div className="col-lg-2"></div>
+                            <div className="col-lg-5 p-0">
+                                <img src={UserPic} width="500"></img>
                             </div>
                         </div>
-                        <ul className="list-group data-list">
-                            {this.state.users.map(user=>(
-                                <li className="list-group-item py-3">
-                                    <div className="row">
-                                        <div className="col-lg-1">
-                                            <small className="text-secondary">ID</small>
-                                            <h6>0{user.id_user}</h6>
+                    </div>
+                    <div className="main-data">
+                        <div className="container">
+                            <h3>Data <br/> Petugas</h3>
+                            <ul className="list-group">
+                                {this.state.users.map(user=>(
+                                    <li className="list-group-item data-list py-3">
+                                        <div className="row">
+                                            <div className="col-lg-1">
+                                                <small className="text-secondary">ID</small>
+                                                <h6>0{user.id_user}</h6>
+                                            </div>
+                                            <div className="col-lg-4">
+                                                <small className="text-secondary">Nama</small>
+                                                <h6>{user.nama}</h6>
+                                            </div>
+                                            <div className="col-lg-2">
+                                                <small className="text-secondary">Role</small>
+                                                <h6>{user.role}</h6>
+                                            </div>
+                                            <div className="col-lg-3">
+                                                <small className="text-secondary">Username</small>
+                                                <h6>{user.username}</h6>
+                                            </div>
+                                            <div className="col-lg-2 px-5">
+                                                <button className={`btn btn-info btn-sm mt-1 mx-2 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.ubahData(user.id_user)}><i class="fa-solid fa-pen-to-square"></i></button>
+                                                <button className={`btn btn-danger btn-sm mt-1 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(user.id_user)}><i class="fa-solid fa-trash"></i></button>
+                                            </div>                                    
                                         </div>
-                                        <div className="col-lg-4">
-                                            <small className="text-secondary">Nama</small>
-                                            <h6>{user.nama}</h6>
-                                        </div>
-                                        <div className="col-lg-3">
-                                            <small className="text-secondary">Role</small>
-                                            <h6>{user.role}</h6>
-                                        </div>
-                                        <div className="col-lg-3">
-                                            <small className="text-secondary">Username</small>
-                                            <h6>{user.username}</h6>
-                                        </div>
-                                        <div className="col-lg-1">
-                                            <button className={`btn btn-info btn-sm mt-1 mx-2 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.ubahData(user.id_user)}><i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button className={`btn btn-danger btn-sm mt-1 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(user.id_user)}><i class="fa-solid fa-trash"></i></button>
-                                        </div>                                    
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                     <div className="modal fade" id="tambah-modal" tabindex="-1" aria-labelledby="tambah-modal-label" aria-hidden="true">
                         <div className="modal-dialog modal-md">

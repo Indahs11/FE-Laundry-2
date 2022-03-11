@@ -3,6 +3,9 @@ import axios from "axios";
 import moment from "moment";
 import {authorization, baseUrl, formatNumber} from "../Config.js"
 import { Link } from "react-router-dom"
+import ReactToPdf from 'react-to-pdf'
+import domToPdf from 'dom-to-pdf'
+import Shoopic from './transaction.png'
 
 class Transaksi extends React.Component{
     constructor(){
@@ -120,6 +123,16 @@ class Transaksi extends React.Component{
             .catch(error => console.log(error))
         }
     }
+    convertPdf(){
+        //ambil elemen yang akan di convert
+        let element = document.getElementById(`topdf`)
+        let options = {
+            filename : "laporan.pdf"
+        }
+        domToPdf(element, options, () => {
+            window.alert("File akan segera di Download")
+        })
+    }
     componentDidMount(){
         this.getData()
         let user = JSON.parse(localStorage.getItem("user"))
@@ -132,73 +145,93 @@ class Transaksi extends React.Component{
         }
     }
     render(){
+        const target = React.createRef()
+        const target2 = React.createRef()
+        const optionPdf = {
+            orientation: `landscape`,
+            unit: `cm`,
+            format: [21 , 29.7],
+        }
         return(
             <div className="transaction-pages">
                 <div className="main-content">
-                    <div className="row mb-2">
-                        <div className="col-lg-10 col-md-6">
-                            <h3 className="text-secondary pt-4">Data User</h3>
-                        </div>
-                        <div className="col-lg-2 col-md-6 d-grid gap-2 d-md-flex justify-content-md-end btn-add">
-                            <button class={`btn btn-primary me-md-2 my-3 ${this.state.visible ? `` : `d-none`}`} type="button"><Link to="/formTransaksi" className="text-white">Tambah Transaksi</Link></button>
+                    <div className="container">
+                        <div className="title-section row">
+                            <div className="col-lg-5">
+                                <h2>Selamat datang <br/>di <span>halaman transaksi</span></h2>
+                                <h6 className="mt-3">Gulir ke bawah untuk melihat data transaksi</h6>
+                                <div className="btn-add mt-4">
+                                    <button class={`btn btn-primary me-md-2 ${this.state.visible ? `` : `d-none`}`} type="button"><Link to="/formTransaksi" className="text-white">Tambah Transaksi</Link></button>
+                                    <button className="btn btn-success" onClick={() => this.convertPdf()}>Generate PDF</button>
+                                </div>
+                            </div>
+                            <div className="col-lg-3"></div>
+                            <div className="col-lg-4 pt-5">
+                                <img src={Shoopic} width="450"></img>
+                            </div>
                         </div>
                     </div>
-                    <ul className="list-group">
-                        {this.state.transaksi.map(trans => (
-                            <li className="list-group-item mt-3 data-list card">
-                                <div className="row">
-                                    {/* Member Area */}
-                                    <div className="col-lg-1">
-                                        <small>{moment(trans.tgl).format('L')}</small>
-                                    </div>
-                                    <div className="col-lg-3 px-4">
-                                        <small>{trans.member.nama}</small> <br/>
-                                        <small className="text-secondary">{trans.member.alamat}</small>
-                                    </div>
-                                    <div className="col-lg-2">
-                                        <h6 className="text-secondary">Batas Waktu</h6>
-                                        <small>{moment(trans.batas_waktu).format('L')}</small>
-                                    </div>
-                                    <div className="col-lg-2">
-                                        <h6 className="text-secondary">Tanggal Bayar</h6>
-                                        <small>{moment(trans.tgl_bayar).format('L')}</small>
-                                    </div>
-                                    <div className="col-lg-2">
-                                        {this.convertStatus(trans.id_transaksi, trans.status)} <br/>
-                                        {this.convertStatusBayar(trans.id_transaksi, trans.dibayar)}
-                                    </div>
-                                    <div className="col-lg-2">
-                                        <b className="text-secondary">Total : </b>
-                                        <small> Rp {formatNumber(trans.total)}</small> <br/>
-                                        <button className="btn btn-danger btn-sm mt-3" onClick={() => this.hapusTransaksi(trans.id_transaksi)}><i class="fa-solid fa-trash"></i></button>
-                                    </div>
-                                </div>
-                                <hr />
-                                {/* Detail Transaksi */}
-                                <h6 className="text-primary mt-3">Detail Transaksi</h6>
-                                {trans.detail_transaksi.map(detail => (
-                                    <div className="row">
-                                        {/* Jenis Paket */}
-                                        <div className="col-lg-3">
-                                            {detail.paket.jenis_paket}
+                    <div className="main-data">
+                        <div ref={target} id="topdf" className="container">
+                            <h3>Data <br/> Transaksi</h3>
+                            <ul className="list-group">
+                                {this.state.transaksi.map(trans => (
+                                    <li className="list-group-item mt-3 card">
+                                        <div className="row">
+                                            {/* Member Area */}
+                                            <div className="col-lg-1 px-0">
+                                                <small><b>{moment(trans.tgl).format('L')}</b></small>
+                                            </div>
+                                            <div className="col-lg-3 px-4">
+                                                <small>{trans.member.nama}</small> <br/>
+                                                <small className="text-secondary">{trans.member.alamat}</small>
+                                            </div>
+                                            <div className="col-lg-2">
+                                                <h6 className="text-secondary">Batas Waktu</h6>
+                                                <small>{moment(trans.batas_waktu).format('L')}</small>
+                                            </div>
+                                            <div className="col-lg-2">
+                                                <h6 className="text-secondary">Tanggal Bayar</h6>
+                                                <small>{moment(trans.tgl_bayar).format('L')}</small>
+                                            </div>
+                                            <div className="col-lg-2">
+                                                {this.convertStatus(trans.id_transaksi, trans.status)} <br/>
+                                                {this.convertStatusBayar(trans.id_transaksi, trans.dibayar)}
+                                            </div>
+                                            <div className="col-lg-2">
+                                                <b className="text-secondary">Total : </b>
+                                                <small> Rp {formatNumber(trans.total)}</small> <br/>
+                                                <button className="btn btn-danger btn-sm mt-3" onClick={() => this.hapusTransaksi(trans.id_transaksi)}><i class="fa-solid fa-trash"></i></button>
+                                            </div>
                                         </div>
-                                        {/* Quantiti */}
-                                        <div className="col-lg-2">
-                                            {detail.qty}
-                                        </div>
-                                        {/* Harga Paket */}
-                                        <div className="col-lg-3">
-                                            Rp {formatNumber(detail.paket.harga)}
-                                        </div>
-                                        {/* Total */}
-                                        <div className="col-lg-4">
-                                            Rp {formatNumber(detail.paket.harga * detail.qty)}
-                                        </div>
-                                    </div>
-                                ))}
-                            </li>
-                        ))} 
-                    </ul> 
+                                        <hr />
+                                        {/* Detail Transaksi */}
+                                        <h6 className="text-primary mt-3">Detail Transaksi</h6>
+                                        {trans.detail_transaksi.map(detail => (
+                                            <div className="row">
+                                                {/* Jenis Paket */}
+                                                <div className="col-lg-3">
+                                                    {detail.paket.jenis_paket}
+                                                </div>
+                                                {/* Quantiti */}
+                                                <div className="col-lg-2">
+                                                    {detail.qty}
+                                                </div>
+                                                {/* Harga Paket */}
+                                                <div className="col-lg-3">
+                                                    Rp {formatNumber(detail.paket.harga)}
+                                                </div>
+                                                {/* Total */}
+                                                <div className="col-lg-4">
+                                                    Rp {formatNumber(detail.paket.harga * detail.qty)}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </li>
+                                ))} 
+                            </ul> 
+                        </div>
+                    </div>
                 </div>
             </div>
         )

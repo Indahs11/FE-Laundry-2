@@ -8,8 +8,8 @@ function Logout(){
 export default function Navbar(props){
         return(
             <div>
-                <nav className="navbar navbar-expand-lg navbar-light fixed-top px-5">
-                    <div className="container-fluid">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top px-5">
+                    <div className="container">
                         <a className="navbar-brand">SOlO</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@ export default function Navbar(props){
                                     <NavLink className="nav-link"  to="/paket">Paket</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link"  to="/users">User</NavLink>
+                                    <NavLink className="nav-link"  to="/users">Petugas</NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink className="nav-link"  to="/transaksi">Transaksi</NavLink>

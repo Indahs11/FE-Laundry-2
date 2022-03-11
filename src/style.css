@@ -1,24 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 *{
     font-family: 'Nunito', sans-serif;
     color: #2C4669;
 }
-body{  
-    background-color: #95a6e41c;
-}
+/* body{  
+    background-color: #f4f4f48a !important;
+} */
 .main-content{
-    padding: 100px 50px;
+    padding: 80px 0px 0px;
 }
 
 /* Navbar */
 .navbar-nav{
     padding-top: 10px;
 }
+.bg-light{
+    background-color: white !important;
+}
 .navbar-brand{
     padding-top: 15px;
     font-family: 'Fredoka One', cursive;
     font-size: 24px;
-    color: #3C50E0 !important;
+    color: #2495ce !important;
 }
 .navbar-nav .nav-link{
     padding: 10px 12px !important;
@@ -27,11 +31,11 @@ body{
     font-weight: 600;
 }
 .nav-item .active{
-    color: #3C50E0 !important;
-    font-weight: 800;
+    color: #2495ce !important;
+    font-weight: 700;
 }
 .text-primary{
-    color: #3C50E0 !important;
+    color: #0063F0 !important;
 }
 .text-warning{
     color: #F8B709 !important;
@@ -40,27 +44,27 @@ body{
     color: #AFB3BF;
 }
 .bg-primary{
-    background-color: #3C50E0 !important;
+    background-color: #56A7D0 !important;
 }
 .bg-warning{
-    background-color: #FFC535 !important;
+    background-color: #FAA032 !important;
 }
 .bg-success{
-    background-color: #1CDC75 !important;
+    background-color: #37CB94 !important;
 }
 .bg-info{
     background-color: #232DC6 !important;
 }
 .bg-danger{
-    background-color: #F81728 !important;
+    background-color: #F3563A !important;
 }
 .btn-primary{
-    background-color: #3C50E0;
-    border: #3C50E0;
+    background-color: #2495ce;
+    border: #2495ce;
 }
 .btn-primary:hover{
-    background-color: #2e43dd;
-    border: #2e43dd;
+    background-color: #56A7D0;
+    border: #56A7D0;
 }
 
 .btn-info{
@@ -78,6 +82,14 @@ body{
 .btn-danger:hover{
     background-color: #e40114;
     border: #e40114;
+}
+.btn-success{
+    background-color: #18b964;
+    border: #18b964;
+}
+.btn-success:hover{
+    background-color: #159c54;
+    border: #159c54;
 }
 .modal-content{
     padding: 10px;
@@ -97,10 +109,9 @@ body{
     padding: 90px 0px 30px 0px;
 }
 .login-header h4{
-    font-family: 'Fredoka One', cursive;
     font-size: 28px;
-    font-weight: 400;
-    color: #3C50E0 !important;
+    font-weight: 900;
+    color: #2495ce !important;
 }
 .login-page .card{
     border: none;
@@ -111,7 +122,7 @@ body{
     background-color: transparent;
 }
 .login-page i{
-    color: #3C50E0;
+    color: #2495ce;
 }
 .login-page input{
     font-size: 14px;
@@ -126,10 +137,115 @@ body{
 .header span{
     color: #AFB3BF;
 }
+/* Dashboard Page */
+.dashboard-page .home-section{
+    margin-bottom: 50px;
+}
+.dashboard-page .home-section h2{
+    margin-top: 80px;
+    font-size: 48px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+.dashboard-page .home-section h2 span{
+    color: #56A7D0;
+    margin-top: 80px;
+    font-size: 48px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+.dashboard-page .summary i{
+    font-size: 24px;
+    color: white;
+    padding: 18px 15px;
+    border-radius: 15px;
+}
+.dashboard-page .summary h6{
+    margin-bottom: 0px;
+    padding-top: 5px;
+}
+.dashboard-page .user-identity{
+    border: none;
+    border-radius: 15px;
+    background-image: url('./card.jpg');
+    background-size: 100%;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 12%);
+    padding: 20px;
+}
+.dashboard-page .user-identity i{
+    color: white;
+    font-size: 24px;
+}
+.dashboard-page .user-identity h3{
+    color: white;
+    font-weight: 900;
+    font-size: 24px;
+    text-align: right !important;
+}
+.dashboard-page .income{
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 12%);
+}
+.dashboard-page .income i{
+    font-size: 28px;
+    padding: 20px 25px;
+}
+.dashboard-page .summary .card{
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 20%);
+    padding: 0px;
+}
+.latest-transactions .data-latest{
+    margin-top: 20px;
+    border: none;
+    border-left: 5px solid #0063F0;
+    box-shadow: 2px 2px 2px #8d90b8a1;
+}
+/* Paket Page */
+.user-page .title-section img{
+    margin-top: -80px !important;
+}
 /* List Data */
+.data-list{
+    margin-top: 8px;
+    border: none;
+    border-left: 3px solid #F3563A;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 10%);
+}
 .data-list i{
     color: white;
     font-size: 14px;
+}
+.title-section h2{
+    margin-top: 20px;
+    font-size: 48px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+.title-section h2 span{
+    margin-top: 90px;
+    font-size: 48px;
+    font-weight: 700;
+    color: #FF7250;
+    font-family: 'Poppins', sans-serif;
+}
+.title-section{
+    padding: 100px 0px;
+}
+.main-data{
+    background-color: #f4f4f4;
+    padding: 50px 0px;
+}
+.main-data h3{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    color: #000;
+    margin-bottom: 20px;
 }
 /* Transaction Pages */
 .transaction-pages .btn-add a{
@@ -137,6 +253,19 @@ body{
 }
 .transaction-pages .card{
     border: 1px solid rgba(0,0,0,.125);
+    border-left: 4px solid #56A7D0;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 12%);
     border-radius: 8px;
     padding: 30px;
 }
+.transaction-pages .card i{
+    color: white;
+}
+.transaction-pages .title{
+    margin-top: -55px;
+}
+@media screen and (max-width: 768px) {
+    .transaction-pages .title {
+      margin-top: 10px
+    }
+  }

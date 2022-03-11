@@ -4,6 +4,7 @@ import { event } from 'jquery'
 import axios from 'axios'
 import {authorization, baseUrl} from "../Config.js"
 import { Link } from 'react-router-dom'
+import MemberPic from './member.png'
 
 
 class Member extends React.Component{
@@ -133,47 +134,65 @@ class Member extends React.Component{
         return(
             <div className="member-page">
                 <div className="main-content">
-                    <div className="row mb-2">
+                    <div className="container">
+                        <div className="title-section row">
+                            <div className="col-lg-5">
+                                <h2>Selamat datang <br/>di <span>halaman member</span></h2>
+                                <h6 className="mt-3">Gulir ke bawah untuk melihat data member</h6>
+                                <div className="">
+                                    {this.showAddButton()}
+                                </div>
+                            </div>
+                            <div className="col-lg-3"></div>
+                            <div className="col-lg-4">
+                                <img src={MemberPic} width="320"></img>
+                            </div>
+                        </div>
+                    </div>
+                    {/* <div className="row mb-2 page-title">
                         <div className="col-lg-10 col-md-6">
                             <h3 className="text-secondary pt-4">Data Member</h3>
                         </div>
                         <div className="col-lg-2 col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
                             {this.showAddButton()}
                         </div>
-                    </div>
-                    <div className="">
-                        <ul className="list-group data-list">
-                            {this.state.members.map(member => (
-                                <li className="list-group-item py-3">
-                                    <div className="row">
-                                        <div className="col-lg-1">
-                                            <small className="text-secondary">ID</small>
-                                            <h6>0{member.id_member}</h6>
+                    </div> */}
+                    <div className="main-data">
+                        <div className="container">
+                            <h3>Data <br/> Member</h3>
+                            <ul className="list-group">
+                                {this.state.members.map(member => (
+                                    <li className="list-group-item data-list py-3 card">
+                                        <div className="row">
+                                            {/* <div className="col-lg-1">
+                                                <small className="text-secondary">ID</small>
+                                                <h6>0{member.id_member}</h6>
+                                            </div> */}
+                                            <div className="col-lg-3">
+                                                <small className="text-secondary">Nama</small>
+                                                <h6>{member.nama}</h6>
+                                            </div>
+                                            <div className="col-lg-1">
+                                                <small className="text-secondary">Gender</small>
+                                                <h6>{member.jenis_kelamin}</h6>
+                                            </div>
+                                            <div className="col-lg-2">
+                                                <small className="text-secondary">Telepon</small>
+                                                <h6>{member.telepon}</h6>
+                                            </div>
+                                            <div className="col-lg-4">
+                                                <small className="text-secondary">Alamat</small>
+                                                <h6>{member.alamat}</h6>
+                                            </div> 
+                                            <div className="col-lg-2 px-5">
+                                                <button className={`btn btn-info btn-sm mt-1 mx-2 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.ubahData(member.id_member)}><i class="fa-solid fa-pen-to-square"></i></button>
+                                                <button className={`btn btn-danger btn-sm mt-1 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(member.id_member)}><i class="fa-solid fa-trash"></i></button>
+                                            </div>      
                                         </div>
-                                        <div className="col-lg-3">
-                                            <small className="text-secondary">Nama</small>
-                                            <h6>{member.nama}</h6>
-                                        </div>
-                                        <div className="col-lg-1">
-                                            <small className="text-secondary">Gender</small>
-                                            <h6>{member.jenis_kelamin}</h6>
-                                        </div>
-                                        <div className="col-lg-2">
-                                            <small className="text-secondary">Telepon</small>
-                                            <h6>{member.telepon}</h6>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <small className="text-secondary">Alamat</small>
-                                            <h6>{member.alamat}</h6>
-                                        </div> 
-                                        <div className="col-lg-1">
-                                            <button className={`btn btn-info btn-sm mt-1 mx-2 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.ubahData(member.id_member)}><i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button className={`btn btn-danger btn-sm mt-1 ${this.state.visible ? `` : `d-none`}`} onClick={() => this.hapusData(member.id_member)}><i class="fa-solid fa-trash"></i></button>
-                                        </div>      
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div className="modal fade" id="tambah-modal" tabindex="-1" aria-labelledby="tambah-modal-label" aria-hidden="true">

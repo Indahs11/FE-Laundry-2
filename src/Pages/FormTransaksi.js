@@ -80,6 +80,7 @@ class FormTransaksi extends React.Component{
     }
     simpanTransaksi(){
         let endpoint = "http://localhost:8000/transaksi"
+        let userLoggedId = JSON.parse(localStorage.getItem("user"))
             //Menampung data
             let newData = {
                 id_transaksi : this.state.id_transaksi,
@@ -87,6 +88,7 @@ class FormTransaksi extends React.Component{
                 batas_waktu : this.state.batas_waktu,
                 tgl_bayar : this.state.tgl_bayar,
                 id_member : this.state.id_member,
+                id_user : userLoggedId.id_user,
                 status : this.state.status,
                 dibayar : this.state.dibayar,
                 detail_transaksi: this.state.detail_transaksi
@@ -138,8 +140,8 @@ class FormTransaksi extends React.Component{
                             <div className="form-group">
                                 <label>Status Bayar</label>
                                 <select className="form-control mb-2" value={this.state.dibayar} onChange={ev  => this.setState({dibayar : ev.target.value})}>
-                                    <option value={true}>Sudah Dibayar</option>
                                     <option value={false}>Belum Dibayar</option>
+                                    <option value={true}>Sudah Dibayar</option>
                                 </select>
                             </div>
                             <div className="mt-4">
