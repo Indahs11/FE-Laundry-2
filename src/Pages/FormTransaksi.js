@@ -11,7 +11,7 @@ class FormTransaksi extends React.Component{
             tgl: "",
             batas_waktu: "",
             tgl_bayar: "",
-            dibayar: false,
+            dibayar: 0,
             id_user: "",
             detail_transaksi: [],
             members: [],
@@ -79,6 +79,30 @@ class FormTransaksi extends React.Component{
         }
     }
     simpanTransaksi(){
+        if (document.getElementById("member").value == "") {
+            alert("missing member");
+            return;
+        }
+        if (document.getElementById("tgl").value == "") {
+            alert("missing tanggal transaksi");
+            return;
+        }
+        if (document.getElementById("batas_waktu").value == "") {
+            alert("missing batas waktu");
+            return;
+        }
+        // if (document.getElementById("tgl_bayar").value == "") {
+        //     alert("missing tanggal transaksi");
+        //     return;
+        // }
+        if (document.getElementById("status").value == "") {
+            alert("missing status");
+            return;
+        }
+        if (this.state.detail_transaksi.length == 0) {
+            alert("missing paket");
+            return;
+        }
         let endpoint = "http://localhost:8000/transaksi"
         let userLoggedId = JSON.parse(localStorage.getItem("user"))
             //Menampung data
@@ -108,15 +132,16 @@ class FormTransaksi extends React.Component{
     render(){
         return(
             <div className="main-content">
-                <div className="card p-3">
-                    <div className="card-header bg-primary">
-                        <h4 className="text-white">Form Transaksi</h4>
+                <div className="container form-transaction">
+                    <div className="text-center my-5">
+                        <h1>Tambahkan Transaksi Baru</h1>
+                        <h6>Masukkan data dengan benar dan jelas</h6>
                     </div>
-                    <div className="card-body">
-                        {/* <form> */}
+                    <div className="card p-3 mb-5">
+                        <div className="card-body row">
                             <div className="form-group">
                                 <label>ID Member</label>
-                                <select className="form-control mb-2" value={this.state.id_member} onChange={ev  => this.setState({id_member : ev.target.value})}>
+                                <select className="form-control mb-4" id="member" value={this.state.id_member} onChange={ev  => this.setState({id_member : ev.target.value})} required >
                                     <option value="">Pilih Member</option>
                                     {this.state.members.map(member => (
                                         <option value={member.id_member}>
@@ -125,59 +150,67 @@ class FormTransaksi extends React.Component{
                                     ))}
                                 </select>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group col-lg-4">
                                 <label>Tanggal Transaksi</label>
-                                <input type="date" className="form-control mb-2" value={this.state.tgl} onChange={ev  => this.setState({tgl : ev.target.value})}></input>
+                                <input type="date" id="tgl" className="form-control mb-4" value={this.state.tgl} onChange={ev  => this.setState({tgl : ev.target.value})} required ></input>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group col-lg-4">
                                 <label>Batas Waktu</label>
-                                <input type="date" className="form-control mb-2" value={this.state.batas_waktu} onChange={ev  => this.setState({batas_waktu : ev.target.value})}></input>
+                                <input type="date" id="batas_waktu" className="form-control mb-4" value={this.state.batas_waktu} onChange={ev  => this.setState({batas_waktu : ev.target.value})} required ></input>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group col-lg-4">
                                 <label>Tanggal Bayar</label>
-                                <input type="date" className="form-control mb-2" value={this.state.tgl_bayar} onChange={ev  => this.setState({tgl_bayar : ev.target.value})}></input>
+                                <input type="date" id="tgl_bayar" className="form-control mb-4" value={this.state.tgl_bayar} onChange={ev  => this.setState({tgl_bayar : ev.target.value})} required ></input>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group col-lg-5">
                                 <label>Status Bayar</label>
-                                <select className="form-control mb-2" value={this.state.dibayar} onChange={ev  => this.setState({dibayar : ev.target.value})}>
-                                    <option value={false}>Belum Dibayar</option>
-                                    <option value={true}>Sudah Dibayar</option>
+                                <select className="form-control mb-4" id="status" value={this.state.dibayar} onChange={ev  => this.setState({dibayar : ev.target.value})} required >
+                                    <option value={0}>Belum dibayar</option>
+                                    <option value={1}>Sudah dibayar</option>
                                 </select>
                             </div>
-                            <div className="mt-4">
-                                <button className="btn btn-info btn-sm text-white" onClick={() => this.addPaket()}>Tambah Paket</button>
+                            <div className="mt-3 mb-4">
+                                <button className="btn btn-primary btn-sm text-white" onClick={() => this.addPaket()}>Tambah Paket</button>
                             </div>
+                            <hr/>
                             {/* Detail Transaksi */}
-                            <h5 className="teks-primary mt-4">Detail Transaksi</h5>
-                                {this.state.detail_transaksi.map(detail => (
-                                    <div className="row mb-4">
-                                    {/* Jenis Paket */}
+                            <h5 className="teks-primary mt-2">Detail Transaksi</h5>
+                            <div className="row">
                                     <div className="col-lg-3">
                                         <h6>Jenis Paket</h6>
-                                        {detail.jenis_paket}
                                     </div>
-                                    {/* Quantiti */}
                                     <div className="col-lg-2">
                                         <h6>Quantity</h6>
-                                        {detail.qty}
                                     </div>
-                                    {/* Harga Paket */}
                                     <div className="col-lg-3">
                                         <h6>Harga</h6>
-                                        Rp.{detail.harga}
                                     </div>
-                                    {/* Total */}
                                     <div className="col-lg-2">
                                         <h6>Total Harga</h6>
-                                        {detail.harga * detail.qty}
                                     </div>
                                     <div className="col-lg-2">
                                         <h6>Aksi</h6>
-                                        <button type="button" className="btn btn-danger" onClick={() => this.hapusData(detail.id_paket)}>Hapus</button>
                                     </div>
                                 </div>
-                        ))}
-
+                            {this.state.detail_transaksi.map(detail => (
+                                <div className="row mb-4">
+                                    <div className="col-lg-3">
+                                        {detail.jenis_paket}
+                                    </div>
+                                    <div className="col-lg-2">
+                                        {detail.qty}
+                                    </div>
+                                    <div className="col-lg-3">
+                                        Rp.{detail.harga}
+                                    </div>
+                                    <div className="col-lg-2">
+                                        {detail.harga * detail.qty}
+                                    </div>
+                                    <div className="col-lg-2">
+                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => this.hapusData(detail.id_paket)}><i class="fa-solid fa-trash text-white"></i></button>
+                                    </div>
+                                </div>
+                            ))}
                             {/* Modal Pilihan Paket */}
                             <div className="modal" id="modal-paket">
                                 <div className="modal-dialog modal-md">
@@ -211,9 +244,9 @@ class FormTransaksi extends React.Component{
                             </div>
                             <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
                                 <a className="btn btn-danger btn-md" href="/transaksi">Batal</a>
-                                <button className="btn btn-primary btn-md" onClick={() => this.simpanTransaksi()}>Tambahkan</button>
+                                <button className="btn btn-info text-white btn-md" onClick={() => this.simpanTransaksi()}>Tambahkan</button>
                             </div>
-                        {/* </form> */}
+                        </div>
                     </div>
                 </div>
             </div>

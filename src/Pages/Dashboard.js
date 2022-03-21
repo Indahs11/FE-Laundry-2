@@ -75,97 +75,71 @@ class Dashboard extends React.Component{
             <div className="dashboard-page">
                 <div className="main-content container">
                     <div className="home-section row">
-                        <div className="col-lg-5">
+                        <div className="col-lg-5 col-sm-6">
                             <h2><span>Selamat</span> datang dan <span>semangat </span>bekerja <span>{this.state.namaUser}</span></h2>
                             <h6></h6>
                         </div>
-                        <div className="col-lg-2"></div>
-                        <div className="col-lg-5">
-                            <img src={Homepic} width="400"></img>
+                        <div className="col-lg-2 col-sm-1"></div>
+                        <div className="col-lg-5 col-sm-5">
+                            <img src={Homepic} width="400" className="img-respons"></img>
                         </div>
                     </div>
                     <div className="row summary">
-                    <div className="col-lg-3 col-md-6 my-1">
+                        <div className="col-lg-3 col-sm-6 my-1">
                             <div className="card">
                                 <div className="p-3 row">
                                     <div className="col-md-4 text-center">
-                                        <i class="fa-solid fa-user-gear bg-success"></i>
+                                        <i className="fa-solid fa-user-gear bg-success"></i>
                                     </div>
                                     <div className="col-md-8">
                                         <h6 className="card-title">Data User</h6>
-                                        <h3>{this.state.jumlahUser}</h3>
+                                        <h4>{this.state.jumlahUser}</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6 my-1">
+                        <div className="col-lg-3 col-sm-6 my-1">
                             <div className="card">
                                 <div className="p-3 row">
                                     <div className="col-md-4 text-center">
-                                        <i class="fa-solid fa-user-tag bg-primary"></i>
+                                        <i className="fa-solid fa-user-tag bg-primary"></i>
                                     </div>
                                     <div className="col-md-8">
                                         <h6 className="card-title">Data Member</h6>
-                                        <h3>{this.state.jumlahMember}</h3>
+                                        <h4>{this.state.jumlahMember}</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6 my-1">
+                        <div className="col-lg-3 col-sm-6 my-1">
                             <div className="card">
                                 <div className="p-3 row">
                                     <div className="col-md-4 text-center">
-                                        <i class="fa-solid fa-box-open bg-warning"></i>
+                                        <i className="fa-solid fa-box-open bg-warning"></i>
                                     </div>
                                     <div className="col-md-8">
                                         <h6 className="card-title">Data Paket</h6>
-                                        <h3>{this.state.jumlahPaket}</h3>
+                                        <h4>{this.state.jumlahPaket}</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6 my-1">
+                        <div className="col-lg-3 col-sm-6 my-1">
                             <div className="card">
                                 <div className="p-3 row">
                                     <div className="col-md-4 text-center">
-                                        <i class="fa-solid fa-cart-arrow-down bg-danger"></i>
+                                        <i className="fa-solid fa-money-check-dollar bg-danger"></i>
                                     </div>
                                     <div className="col-md-8">
-                                        <h6 className="card-title">Data Transaksi</h6>
-                                        <h3>{this.state.jumlahTranskasi}</h3>
+                                        <h6 className="card-title">Income</h6>
+                                        <h4>Rp {formatNumber(this.state.income)}</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-6 my-1">
-                            <div className="card">
-                                <div className="p-3 row">
-                                    <div className="col-md-4 text-center">
-                                        <i class="fa-solid fa-cart-arrow-down bg-danger"></i>
-                                    </div>
-                                    <div className="col-md-8">
-                                        <h6 className="card-title">Data Transaksi</h6>
-                                        <h3>{this.state.jumlahTranskasi}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* <div className="col-lg-6 col-md-12">
-                            <div className="card mt-3 income">
-                                <div className="card-body row">
-                                    <div className="col-md-3 px-4">
-                                        <i class="fa-solid fa-file-invoice-dollar bg-info"></i>
-                                    </div>
-                                    <div className="col-md-8">
-                                        <h5 className="card-title">Income</h5>
-                                        <h3>Rp {formatNumber(this.state.income)}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
         )
     }
 }

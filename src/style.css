@@ -35,7 +35,7 @@
     font-weight: 700;
 }
 .text-primary{
-    color: #0063F0 !important;
+    color: #0587c9 !important;
 }
 .text-warning{
     color: #F8B709 !important;
@@ -59,8 +59,8 @@
     background-color: #F3563A !important;
 }
 .btn-primary{
-    background-color: #2495ce;
-    border: #2495ce;
+    background-color: #0587c9;
+    border: #0587c9;
 }
 .btn-primary:hover{
     background-color: #56A7D0;
@@ -95,13 +95,14 @@
     padding: 10px;
     border: none;
     border-radius: 8px;
+    font-size: 14px;
 }
-.modal-header{
-    border-radius: 5px 5px 3px 3px;
-    border-bottom: none;
+.modal-title{
+    font-weight: 700;
+    font-size: 18px;
 }
-.modal-header h5{
-    color: white !important;
+.modal-title i{
+    font-size: 36px;
 }
 /* Login */
 .login-page{
@@ -164,33 +165,6 @@
     margin-bottom: 0px;
     padding-top: 5px;
 }
-.dashboard-page .user-identity{
-    border: none;
-    border-radius: 15px;
-    background-image: url('./card.jpg');
-    background-size: 100%;
-    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 12%);
-    padding: 20px;
-}
-.dashboard-page .user-identity i{
-    color: white;
-    font-size: 24px;
-}
-.dashboard-page .user-identity h3{
-    color: white;
-    font-weight: 900;
-    font-size: 24px;
-    text-align: right !important;
-}
-.dashboard-page .income{
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 12%);
-}
-.dashboard-page .income i{
-    font-size: 28px;
-    padding: 20px 25px;
-}
 .dashboard-page .summary .card{
     border: none;
     border-radius: 20px;
@@ -234,7 +208,7 @@
     font-family: 'Poppins', sans-serif;
 }
 .title-section{
-    padding: 100px 0px;
+    padding: 80px 0px;
 }
 .main-data{
     background-color: #f4f4f4;
@@ -247,13 +221,28 @@
     color: #000;
     margin-bottom: 20px;
 }
+.rounded {
+    border-radius: 50px !important;
+}
+/* Seacrh Bar */
+.search-bar input{
+    border: none;
+    border-radius: 30px;
+    padding: 10px 30px;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 10%);
+}
+
 /* Transaction Pages */
+.transaction-pages .title-section{
+    padding-top: 30px;
+    padding-bottom: 40px;
+}
 .transaction-pages .btn-add a{
     text-decoration: none;
 }
 .transaction-pages .card{
     border: 1px solid rgba(0,0,0,.125);
-    border-left: 4px solid #56A7D0;
+    border-left: 4px solid #F3563A;
     box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 12%);
     border-radius: 8px;
     padding: 30px;
@@ -264,8 +253,46 @@
 .transaction-pages .title{
     margin-top: -55px;
 }
-@media screen and (max-width: 768px) {
+.transaction-pages .summary .card{
+    padding: 0px;
+    border: none;
+    border-radius: 20px;
+}
+.transaction-pages .summary i{
+    font-size: 24px;
+    color: white;
+    padding: 18px 18px;
+    border-radius: 15px;
+}
+.transaction-pages .summary h6{
+    margin-bottom: 0px;
+    padding-top: 5px;
+}
+
+/* Form Transaksi */
+.form-transaction .card{
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 20%);
+}
+.form-transaction .form-control{
+    padding: 10px;
+    margin-top: 5px;
+}
+.form-transaction label{
+    font-weight: 600;
+}
+.struk-transaksi h1{
+    font-size: 36px;
+    font-weight: 900;
+    color: #2495ce !important;
+}
+
+@media screen and (max-width: 991px) {
     .transaction-pages .title {
       margin-top: 10px
     }
-  }
+    .img-respons{
+        display: none;
+    }
+}
