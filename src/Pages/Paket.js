@@ -23,7 +23,7 @@ class User extends React.Component{
         }
     }
     getData() {
-        let endpoint = "http://localhost:8000/paket"
+        let endpoint = `${baseUrl}/paket`
         axios.get(endpoint, authorization)
         .then(response => {
             this.setState({packs: response.data})
@@ -63,7 +63,7 @@ class User extends React.Component{
 
         //cek aksi tambah atau ubah
         if (this.state.action === "tambah"){
-            let endpoint = "http://localhost:8000/paket"
+            let endpoint = `${baseUrl}/paket`
             //Menampung data
             let newPaket = {
                 id_paket : this.state.id_paket,
@@ -79,7 +79,7 @@ class User extends React.Component{
         }else if(this.state.action === "ubah"){
             this.modalPaket.hide()
 
-            let endpoint = "http://localhost:8000/paket/" + this.state.id_paket
+            let endpoint = `${baseUrl}/paket/` + this.state.id_paket
             let data = {
                 id_paket : this.state.id_paket,
                 jenis_paket : this.state.jenis_paket,
@@ -95,7 +95,7 @@ class User extends React.Component{
     }
     hapusData(id_paket){
         if(window.confirm("Apakah anda yakin menghapus data ini?")){
-            let endpoint = "http://localhost:8000/paket/" + id_paket
+            let endpoint = `${baseUrl}/paket/${id_paket}`
 
             axios.delete(endpoint, authorization)
             .then(response => {

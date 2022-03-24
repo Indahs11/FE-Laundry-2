@@ -104,6 +104,9 @@
 .modal-title i{
     font-size: 36px;
 }
+.modal-body label{
+    margin-bottom: 5px;
+}
 /* Login */
 .login-page{
     background-color: #95a6e41c;

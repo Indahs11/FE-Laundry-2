@@ -146,7 +146,7 @@ class Transaksi extends React.Component{
         if (code === 13) {
           let data = this.state.masterTransaksi;
           let found = data.filter(it => 
-            it.member.nama.toLowerCase().includes(this.state.search.toLowerCase()))
+            it.member.nama.toLowerCase().includes(this.state.search.toLowerCase()) || it.tgl.toLowerCase().includes(this.state.search.toLowerCase())) 
           this.setState({ transaksi: found });
         }
     }
@@ -156,7 +156,7 @@ class Transaksi extends React.Component{
             filename: `entri-${id}.pdf`
         }
         domToPdf(element, options, function(pdf){
-            window.alert(`Struk will download soon`)
+            window.alert(`Struk akan segera terunduh`)
         }) 
     }
     componentDidMount(){
@@ -287,67 +287,47 @@ class Transaksi extends React.Component{
                                                 <button className="btn btn-primary mt-2 btn-sm mx-2" onClick={() => this.cetakStruk(trans.id_transaksi)}><i class="fa-solid fa-file-arrow-down"></i></button>
                                             </div>
                                             <div style={{display : `none`}} className="struk-transaksi">
-                                                <div className="col-lg-12 text-success" id={`struk${trans.id_transaksi}`} style={{padding: `100px`}}>
-                                                    <div className="text-center mb-5">
-                                                        <h1 style={{fontSize: `56px`, fontFamily: `Fredoka One`, fontWeight: `900`, color: `#2495ce` }}>SOlO</h1>
+                                                <div className="col-lg-12 text-success" id={`struk${trans.id_transaksi}`} style={{padding: `100px`, fontSize: `24px`}}>
+                                                    <div className="text-center" style={{ marginBottom: `100px`}}>
+                                                        <h1 style={{fontSize: `56px`, fontWeight: `900`, color: `#2495ce` }}>SOlO</h1>
+                                                        <h5>Jln. Buana Agung No.54, Kendari | 66153</h5>
+                                                        <h5>0876571234</h5>
                                                     </div>
                                                     <div className="row text-dark">
                                                         <div className="col-lg-8">
-                                                            <h5>Member: {trans.member.nama}</h5>
-                                                            <h5 className="mt-3">Kasir: {trans.user.nama}</h5>
+                                                            <div>Member: {trans.member.nama}</div>
+                                                            <div className="mt-3">Kasir: {trans.user.nama}</div>
                                                         </div>
                                                         <div className="col-lg-4">
-                                                            <h5>Tanggal Transaksi: {moment(trans.tgl).format('L')}</h5>
-                                                            <h5>Batas pembayaran: {moment(trans.batas_waktu).format('L')}</h5>
-                                                            <h5>Tanggal pembayaran: {moment(trans.tgl_bayar).format('L')}</h5>
+                                                            <div>Tanggal Transaksi: {moment(trans.tgl).format('L')}</div>
+                                                            <div className="my-3">Batas pembayaran: {moment(trans.batas_waktu).format('L')}</div>
+                                                            <div>Tanggal pembayaran: {moment(trans.tgl_bayar).format('L')}</div>
                                                         </div>
                                                     </div>
                                                     <hr/>
-                                                    <table className="table table-lg table-borderless mt-4 table-cell-padding-y">
-                                                        <thead>
-                                                            <tr>
-                                                                <th width="30%">Jenis Paket</th>
-                                                                <th width="20%">Qty</th>
-                                                                <th width="25%">Harga satuan</th>
-                                                                <th width="25%">Harga Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {trans.detail_transaksi.map(item => (
-                                                            <tr>
-                                                                <td>{item.paket.jenis_paket}</td>
-                                                                <td>{item.qty}</td>
-                                                                <td>{item.paket.harga}</td>
-                                                                <td>Rp.{formatNumber(item.paket.harga * item.qty)}</td>
-                                                            </tr>
-                                                        ))}
-                                                            <tr>
-                                                                <td colSpan="2"></td>
-                                                                <td colSpan="1" className="text-right">Total Belanja</td>
-                                                                <td>Rp.{formatNumber(trans.total)}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    {/* <div className="row">
+                                                    <div className="row" style={{fontWeight: `bold`, fontSize: `24px`}}>
                                                         <div className="col-4">Jenis Paket</div>
                                                         <div className="col-2">Qty</div>
                                                         <div className="col-3">Harga Satuan</div>
                                                         <div className="col-3">Total Satuan</div>
                                                     </div>
+                                                    <hr/>
                                                     {trans.detail_transaksi.map(item => (
-                                                        <div className="row">
+                                                        <div className="row my-4">
                                                             <div className="col-4">{item.paket.jenis_paket}</div>
                                                             <div className="col-2">{item.qty}</div>
                                                             <div className="col-3">{item.paket.harga}</div>
                                                             <div className="col-3">Rp.{formatNumber(item.paket.harga * item.qty)}</div>
                                                         </div>
-                                                    ))} */}
-                                                    {/* <div className="row">
-                                                        <div className="col-lg-9"></div>
+                                                    ))}
+                                                    <div className="row mt-5">
+                                                        <div className="col-lg-7"></div>
+                                                        <div className="col-lg-2"><b>Total Belanja</b></div>
                                                         <div className="col-lg-3">
                                                             Rp.{formatNumber(trans.total)}
                                                         </div>
-                                                    </div> */}
+                                                    </div>
+                                                    <div className="text-center" style={{ marginTop: `200px`}}><i>Terima kasih dan jangan lupa datang kembali</i></div>
                                                 </div>
                                             </div>
                                         </div>

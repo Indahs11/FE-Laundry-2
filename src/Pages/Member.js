@@ -250,7 +250,7 @@ class Member extends React.Component {
                       </select>
                     </div>
                     <div className="text-center mt-5">
-                      <button type="button" class="btn btn-light btn-sm mx-2 px-3 py-2" data-bs-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-secondary btn-sm mx-2 px-3 py-2" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" className="btn btn-primary text-white btn-sm px-3 py-2" >Simpan</button>
                     </div>
                   </form>

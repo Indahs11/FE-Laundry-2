@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Modal } from "bootstrap";
-import { authorization } from "../Config";
+import { authorization, baseUrl } from "../Config";
 
 class FormTransaksi extends React.Component{
     constructor(){
@@ -26,7 +26,7 @@ class FormTransaksi extends React.Component{
         }
     }
     getMember(){
-        let endpoint = "http://localhost:8000/member"
+        let endpoint = `${baseUrl}/member`
         axios.get(endpoint, authorization)
         .then(response => {
             this.setState({members: response.data})
@@ -34,7 +34,7 @@ class FormTransaksi extends React.Component{
         .catch(error => console.log(error))
     }
     getPaket(){
-        let endpoint = "http://localhost:8000/paket"
+        let endpoint = `${baseUrl}/paket`
         axios.get(endpoint, authorization)
         .then(response => {
             this.setState({packs: response.data})
@@ -91,10 +91,6 @@ class FormTransaksi extends React.Component{
             alert("missing batas waktu");
             return;
         }
-        // if (document.getElementById("tgl_bayar").value == "") {
-        //     alert("missing tanggal transaksi");
-        //     return;
-        // }
         if (document.getElementById("status").value == "") {
             alert("missing status");
             return;
@@ -103,7 +99,7 @@ class FormTransaksi extends React.Component{
             alert("missing paket");
             return;
         }
-        let endpoint = "http://localhost:8000/transaksi"
+        let endpoint = `${baseUrl}/transaksi`
         let userLoggedId = JSON.parse(localStorage.getItem("user"))
             //Menampung data
             let newData = {
@@ -193,7 +189,7 @@ class FormTransaksi extends React.Component{
                                     </div>
                                 </div>
                             {this.state.detail_transaksi.map(detail => (
-                                <div className="row mb-4">
+                                <div className="row my-2">
                                     <div className="col-lg-3">
                                         {detail.jenis_paket}
                                     </div>

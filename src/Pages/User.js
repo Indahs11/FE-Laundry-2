@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal } from "bootstrap" 
 import axios from 'axios' 
-import { authorization } from '../Config'
+import { authorization, baseUrl } from '../Config'
 import UserPic from './user.png'
 
 class User extends React.Component{
@@ -16,7 +16,7 @@ class User extends React.Component{
             password: "",
             role: "",
             search: "",
-            fillPassowrd: true,
+            fillPassword: true,
             visible: true,
             action: ""
         }
@@ -25,7 +25,7 @@ class User extends React.Component{
         }
     }
     getData() {
-        let endpoint = "http://localhost:8000/users"
+        let endpoint = `${baseUrl}/users`
         axios.get(endpoint, authorization)
         .then(response => {
             this.setState({users: response.data})
@@ -40,7 +40,7 @@ class User extends React.Component{
 
         //Mengosongkan input
         this.setState({
-             nama: "", username: "",password: "",role: "Admin", action: "tambah", fillPassowrd: true
+             nama: "", username: "",password: "",role: "Admin", action: "tambah", fillPassword: true
         })
     }
     ubahData(id_user) {
@@ -68,7 +68,7 @@ class User extends React.Component{
 
         //cek aksi tambah atau ubah
         if (this.state.action === "tambah"){
-            let endpoint = "http://localhost:8000/users"
+            let endpoint = `${baseUrl}/users`
             //Menampung data
             let newUser = {
                 id_user : this.state.id_user,
@@ -91,7 +91,7 @@ class User extends React.Component{
         }else if(this.state.action === "ubah"){
             this.modalUser.hide()
 
-            let endpoint = "http://localhost:8000/users/" + this.state.id_user
+            let endpoint = `${baseUrl}/users/` + this.state.id_user
             //mencari posisi index dari data member berdasarkan id_user pada array members
 
             let data = {
@@ -100,7 +100,7 @@ class User extends React.Component{
                 username : this.state.username,
                 role : this.state.role
             }
-            if(this.state.fillPassowrd == true){
+            if(this.state.fillPassword == true){
                 data.password = this.state.password
             }
             axios.put(endpoint, data, authorization)
@@ -113,7 +113,7 @@ class User extends React.Component{
     }
     hapusData(id_user){
         if(window.confirm("Apakah anda yakin menghapus data ini?")){
-            let endpoint = "http://localhost:8000/users/" + id_user
+            let endpoint = `${baseUrl}/users/${id_user}`
 
             axios.delete(endpoint, authorization)
             .then(response => {
